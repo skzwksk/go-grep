@@ -5,16 +5,14 @@ import (
 	"fmt"
 	"github.com/logrusorgru/aurora"
 	"os"
-	"strings"
+	"regexp"
 )
 
 func main() {
 	fileText := getFileText(os.Args[2])
 	searchWord := os.Args[1]
-	index := strings.Index(fileText, searchWord)
-	if index >= 0 {
-		fmt.Println(strings.Replace(fileText, searchWord, aurora.Magenta(searchWord).String(), -1))
-	}
+	rep := regexp.MustCompile(searchWord)
+	fmt.Println(rep.ReplaceAllStringFunc(fileText, getMagentaString))
 }
 
 func getFileText(fileName string) string {
@@ -30,4 +28,8 @@ func getFileText(fileName string) string {
 		fileText = fileText + s.Text()
 	}
 	return fileText
+}
+
+func getMagentaString(s string) string{
+	return aurora.Magenta(s).String()
 }
