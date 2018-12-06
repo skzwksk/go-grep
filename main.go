@@ -10,25 +10,18 @@ import (
 )
 
 func main() {
-	fileText := getFileText(os.Args[2])
-	searchWord := os.Args[1]
-	rep := regexp.MustCompile(searchWord)
-	fmt.Println(rep.ReplaceAllStringFunc(fileText, getMagentaString))
-}
-
-func getFileText(fileName string) string {
-	file, err := os.Open(fileName)
+	file, err := os.Open(os.Args[2])
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
 
 	s := bufio.NewScanner(file)
-	var fileText string
+	searchWord := os.Args[1]
+	rep := regexp.MustCompile(searchWord)
 	for s.Scan() {
-		fileText = fileText + s.Text()
+		fmt.Println(rep.ReplaceAllStringFunc(s.Text(), getMagentaString))
 	}
-	return fileText
 }
 
 func getMagentaString(s string) string {
