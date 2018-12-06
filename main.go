@@ -17,8 +17,7 @@ func main() {
 	defer file.Close()
 
 	s := bufio.NewScanner(file)
-	searchWord := os.Args[1]
-	rep := regexp.MustCompile(searchWord)
+	rep := regexp.MustCompile(os.Args[1])
 	for s.Scan() {
 		fmt.Println(rep.ReplaceAllStringFunc(s.Text(), getMagentaString))
 	}
