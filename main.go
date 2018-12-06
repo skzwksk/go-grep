@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/logrusorgru/aurora"
+	"log"
 	"os"
 	"regexp"
 )
@@ -18,7 +19,7 @@ func main() {
 func getFileText(fileName string) string {
 	file, err := os.Open(fileName)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	defer file.Close()
 
@@ -30,6 +31,6 @@ func getFileText(fileName string) string {
 	return fileText
 }
 
-func getMagentaString(s string) string{
+func getMagentaString(s string) string {
 	return aurora.Magenta(s).String()
 }
